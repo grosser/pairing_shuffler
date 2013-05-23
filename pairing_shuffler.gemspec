@@ -7,7 +7,7 @@ Gem::Specification.new name, PairingShuffler::VERSION do |s|
   s.authors = ["Michael Grosser"]
   s.email = "michael@grosser.it"
   s.homepage = "http://github.com/grosser/#{name}"
-  s.files = `git ls-files`.split("\n")
+  s.files = Dir.glob("{lib,bin}/**/*")
   s.license = "MIT"
   cert = File.expand_path("~/.ssh/gem-private_key.pem")
   if File.exist?(cert)
