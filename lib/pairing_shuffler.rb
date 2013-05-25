@@ -60,7 +60,20 @@ module PairingShuffler
     def notify(emails)
       subject = "PairingShuffler winners"
       # FYI: if the first line is a url the email is blank in gmail
-      body = "Hello there!\nYou both singed up for PairingShuffler at https://docs.google.com/spreadsheet/ccc?key=#{config[:doc]}\nso let's pair!\n\nGreetings PairingShuffler"
+      body = <<-MAIL.gsub(/^ {8}/, "")
+        Hello Pair!
+
+        You both singed up for PairingShuffler at https://docs.google.com/spreadsheet/ccc?key=#{config[:doc]}
+        so let's pair!
+
+        Tips:
+         - Talk out loud & explain: what are you thinking / what are you going to do
+         - Avoid keyboard fights: use 2 keyboards + 2 mice
+         - Ping pong with tests: A writes tests, B writes implementation
+
+        Greetings,
+        PairingShuffler
+      MAIL
       send_email(emails, :subject => subject, :body => body)
     end
 
