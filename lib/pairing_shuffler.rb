@@ -8,6 +8,8 @@ module PairingShuffler
   end
 
   class Shuffler
+    DAY = 24 * 60 * 60
+
     def initialize(config)
       @config = config
     end
@@ -36,8 +38,15 @@ module PairingShuffler
     end
 
     def list
-      emails = content[2..-1].map(&:first)
+      emails = content.select { |row| row.first.include?("@") && present?(row) }.map(&:first)
       emails.sort_by{ rand }.each_slice(2).to_a.reject { |group| group.size == 1 }
+    end
+
+    def present?(row)
+      away_until = content.map { |row| row.index("Away until") }.compact.first
+      !away_until ||
+        row[away_until].to_s.strip.empty? ||
+        Time.parse(row[away_until]) + DAY < Time.now
     end
   end
 

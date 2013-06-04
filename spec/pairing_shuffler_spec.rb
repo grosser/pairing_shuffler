@@ -11,19 +11,52 @@ describe PairingShuffler do
       PairingShuffler::VERSION.should =~ /^[\.\da-z]+$/
     end
 
-    it "can read a spreadsheet" do
-      shuffler.send(:content).should == [["Test list for library"], ["Email", "Team"], ["a@b.com", "A"], ["b@b.com", "B"], ["c@b.com", "C"]]
+    context "integration" do
+      it "can read a spreadsheet" do
+        shuffler.send(:content).should == [["Test list for library"], ["Email", "Team"], ["a@b.com", "A"], ["b@b.com", "B"], ["c@b.com", "C"]]
+      end
+
+      it "can return a shuffled list" do
+        result = shuffler.send(:list).map(&:sort)
+        result.size.should == 1
+        possible.detect { |x| result.include?(x) }.should_not == nil
+      end
+
+      it "can send emails" do
+        PairingShuffler::Mailer.any_instance.should_receive(:send_email).with{|emails| possible.should include(emails.sort); true }
+        PairingShuffler.shuffle(config)
+      end
     end
 
-    it "can return a shuffled list" do
+    it "does not read non-emails" do
+      shuffler.stub(:content).and_return [["Test list for library"], ["Email", "Team"], ["a@b.com", "A"], ["b@b.com", "B"], ["nope", "C"], ["c@b.com", "C"]]
       result = shuffler.send(:list).map(&:sort)
       result.size.should == 1
-      possible.detect { |x| result.include?(x) }.should_not == nil
+      possible.should include result.first
     end
 
-    it "can send emails" do
-      PairingShuffler::Mailer.any_instance.should_receive(:send_email).with{|emails| possible.should include(emails.sort); true }
-      PairingShuffler.shuffle(config)
+    context "Away until" do
+      let(:day) { 24 * 60 * 60 }
+
+      it "does not include people that are away" do
+        shuffler.stub(:content).and_return [
+          ["Test list for library"],
+          ["Email", "Team", "Away until"],
+          ["a@b.com", "A"],
+          ["b@b.com", "B", Time.now.strftime("%Y-%m-%d")],
+        ]
+        shuffler.send(:list).size.should == 0
+      end
+
+      it "includes people that are back" do
+        shuffler.stub(:content).and_return [
+          ["Test list for library"],
+          ["Email", "Team", "Away until"],
+          ["a@b.com", "A"],
+          ["b@b.com", "B", (Time.now - day).strftime("%Y-%m-%d")],
+        ]
+        shuffler.send(:list).size.should == 1
+      end
     end
   end
 end

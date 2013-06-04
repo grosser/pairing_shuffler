@@ -28,13 +28,14 @@ PairingShuffler.shuffle(
 )
 ```
 
-Spreadsheet should have continuous emails in the first cell starting from cell 3 [example](https://docs.google.com/spreadsheet/ccc?key=0Aj3Q63sKeQFodHVWSGs1MjFOeFhQV0lEYnVVbUVUYXc#gid=0)
+Spreadsheet must have emails in the first column [example](https://docs.google.com/spreadsheet/ccc?key=0Aj3Q63sKeQFodHVWSGs1MjFOeFhQV0lEYnVVbUVUYXc#gid=0)
+and possibly a `Away until` column for people that are away (`2013-01-01` format)
 ```
-1: don't care
-2: don't care
-3: email1
-4: email2
-5: email3
+1: Random text
+2: Custom header, Away until
+3: email@1.com,
+4: email@2.com, 2013-01-01
+5: email@3.com,
 ...
 ```
 
