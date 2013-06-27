@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pairing_shuffler (0.0.4)
+    pairing_shuffler (0.0.5)
       google_drive
 
 GEM
@@ -18,10 +18,10 @@ GEM
     httpauth (0.2.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
-    multi_json (1.7.3)
-    multi_xml (0.5.3)
+    multi_json (1.7.7)
+    multi_xml (0.5.4)
     multipart-post (1.2.0)
-    nokogiri (1.5.9)
+    nokogiri (1.5.10)
     oauth (0.4.7)
     oauth2 (0.9.1)
       faraday (~> 0.8)
