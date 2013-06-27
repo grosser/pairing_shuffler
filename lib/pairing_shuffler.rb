@@ -70,7 +70,7 @@ module PairingShuffler
       subject = "PairingShuffler winners"
       # FYI: if the first line is a url the email is blank in gmail
       body = <<-MAIL.gsub(/^ {8}/, "")
-        Hello Pair!
+        Hello #{emails.map{|e|e.sub(/@.*/,"")}.join(" & ")}!
 
         You both singed up for PairingShuffler at https://docs.google.com/spreadsheet/ccc?key=#{config[:doc]}
         so let's pair!
@@ -89,16 +89,18 @@ module PairingShuffler
 
     private
 
-    def send_email(to, options={})
-      message = <<-MESSAGE.gsub(/^\s+/, "")
-      From: PairingShuffler <#{config.fetch(:username)}>
-      To: #{to.join(", ")}
-      Subject: #{options.fetch(:subject)}
+    def send_email(tos, options={})
+      tos.each do |to|
+        message = <<-MESSAGE.gsub(/^ {10}/, "")
+          From: PairingShuffler <#{config.fetch(:username)}>
+          To: #{to}
+          Reply-To: #{(tos - [to]).join(", ")}
+          Subject: #{options.fetch(:subject)}
 
-      #{options.fetch(:body)}
-      MESSAGE
-
-      smtp.send_message message, config.fetch(:username), to
+          #{options.fetch(:body)}
+        MESSAGE
+        smtp.send_message message, config.fetch(:username), to
+      end
     end
 
     def smtp

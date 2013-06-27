@@ -12,3 +12,12 @@ task :assign_pairs do
   sent = PairingShuffler.shuffle(YAML.load_file("credentials.yml"))
   puts "Sent #{sent.size} mails!"
 end
+
+namespace :test do
+  task :mail do
+    to = ENV["TO"] || raise("set TO=mail@domain.com,other@foo.com")
+    PairingShuffler::Mailer.new(YAML.load_file("credentials.yml")).session do |mailer|
+      mailer.notify(to.split(","))
+    end
+  end
+end
