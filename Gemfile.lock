@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pairing_shuffler (0.0.5)
+    pairing_shuffler (0.0.6)
       google_drive
 
 GEM
