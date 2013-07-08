@@ -46,7 +46,11 @@ module PairingShuffler
       away_until = content.map { |row| row.index("Away until") }.compact.first
       !away_until ||
         row[away_until].to_s.strip.empty? ||
-        Time.parse(row[away_until]) + DAY < Time.now
+        parse_time(row[away_until]) + DAY < Time.now
+    end
+
+    def parse_time(time)
+      Time.strptime(time, "%m/%d/%Y")
     end
   end
 

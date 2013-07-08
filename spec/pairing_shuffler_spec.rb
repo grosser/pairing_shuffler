@@ -43,7 +43,7 @@ describe PairingShuffler do
           ["Test list for library"],
           ["Email", "Team", "Away until"],
           ["a@b.com", "A"],
-          ["b@b.com", "B", Time.now.strftime("%Y-%m-%d")],
+          ["b@b.com", "B", Time.now.strftime("%m/%d/%Y")],
         ]
         shuffler.send(:list).size.should == 0
       end
@@ -53,7 +53,7 @@ describe PairingShuffler do
           ["Test list for library"],
           ["Email", "Team", "Away until"],
           ["a@b.com", "A"],
-          ["b@b.com", "B", (Time.now - day).strftime("%Y-%m-%d")],
+          ["b@b.com", "B", (Time.now - day).strftime("%m/%d/%Y")],
         ]
         shuffler.send(:list).size.should == 1
       end
