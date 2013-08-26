@@ -33,7 +33,7 @@ module PairingShuffler
           data[row - 1] ||= []
           data[row - 1][column - 1] = value
         end
-        data
+        data.compact
       end
     end
 
