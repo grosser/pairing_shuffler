@@ -72,11 +72,12 @@ module PairingShuffler
 
     def notify(emails)
       subject = "PairingShuffler winners"
+      url = config[:short] || "https://docs.google.com/spreadsheet/ccc?key=#{config[:doc]}"
       # FYI: if the first line is a url the email is blank in gmail
       body = <<-MAIL.gsub(/^ {8}/, "")
         Hello #{emails.map{|e|e.sub(/@.*/,"")}.join(" & ")}!
 
-        You both singed up for PairingShuffler at https://docs.google.com/spreadsheet/ccc?key=#{config[:doc]}
+        You both singed up for PairingShuffler at #{url}
         so let's pair!
 
         Tips:
