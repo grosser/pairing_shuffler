@@ -80,9 +80,10 @@ module PairingShuffler
         You both singed up for PairingShuffler at #{url}
         so let's pair!
 
-        Tips:
+        What time would work for you ?
+
+        Ideas:
          - Talk out loud & explain: what are you thinking / what are you going to do
-         - Avoid keyboard fights: use 2 keyboards + 2 mice
          - Ping pong with tests: A writes tests, B writes implementation
          - Invite others to sign up for pairing
 

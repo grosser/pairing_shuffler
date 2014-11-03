@@ -12,6 +12,7 @@ desc "Assign and mail paris using credentials.yml"
 task :assign_pairs do
   sent = PairingShuffler.shuffle(YAML.load_file("credentials.yml"))
   puts "Sent #{sent.size} mails!"
+  puts sent.map { |tos| tos.join(" + ") }.join("\n")
 end
 
 namespace :test do
