@@ -38,7 +38,7 @@ module PairingShuffler
     end
 
     def list
-      emails = content.select { |row| row.first.include?("@") && present?(row) }.map(&:first)
+      emails = content.compact.select { |row| row.first.include?("@") && present?(row) }.map(&:first)
       emails.sort_by{ rand }.each_slice(2).to_a.reject { |group| group.size == 1 }
     end
 
