@@ -26,7 +26,7 @@ module PairingShuffler
 
     def content
       @content ||= begin
-        session = GoogleDrive.login(@config.fetch(:username), @config.fetch(:password))
+        session = GoogleDrive.login_with_oauth(@config.fetch(:access_token))
         cells = session.spreadsheet_by_key(@config[:doc]).worksheets[0].cells
         data = []
         cells.each do |(row, column), value|

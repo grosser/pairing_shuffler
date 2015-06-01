@@ -14,7 +14,10 @@ Send out emails to random pairs from a google docs spreadsheet:
 
 ```Bash
 git clone git://github.com/grosser/pairing_shuffler.git && cd pairing_shuffler
-cp credentials.example.yml credentials.yml # and fill it out
+cp credentials.example.yml credentials.yml
+# fill it out by following instructions on https://github.com/gimite/google-drive-ruby with an oauth 'installed application' token
+rake token
+# store token in credentials.yml
 rake assign_pairs
 ```
 
@@ -22,9 +25,10 @@ rake assign_pairs
 
 ```Ruby
 PairingShuffler.shuffle(
-  :username => "xyz@gmail.com",
-  :password => "123456",
-  :doc => "document-id-copied-from-url"
+  client_id: "foo",
+  client_secrect: "bar",
+  access_token: "baz"
+  doc: "document-id-copied-from-url"
 )
 ```
 

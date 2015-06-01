@@ -8,5 +8,5 @@ Gem::Specification.new name, PairingShuffler::VERSION do |s|
   s.homepage = "http://github.com/grosser/#{name}"
   s.files = `git ls-files lib bin`.split("\n")
   s.license = "MIT"
-  s.add_runtime_dependency "google_drive"
+  s.add_runtime_dependency "google_drive", ">= 1.0.0"
 end
