@@ -26,7 +26,7 @@ task :token do
   print("2. Enter the authorization code shown in the page: ")
   auth.code = $stdin.gets.chomp
   auth.fetch_access_token!
-  puts "Add this token to credentials.yml: #{auth.access_token}"
+  puts "Add this token to credentials.yml: #{auth.refresh_token}"
 end
 
 desc "Assign and mail paris using credentials.yml"

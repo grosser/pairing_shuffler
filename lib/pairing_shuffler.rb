@@ -26,7 +26,7 @@ module PairingShuffler
 
     def content
       @content ||= begin
-        session = GoogleDrive.login_with_oauth(@config.fetch(:access_token))
+        session = GoogleDrive.login_with_oauth(access_token)
         cells = session.spreadsheet_by_key(@config[:doc]).worksheets[0].cells
         data = []
         cells.each do |(row, column), value|
@@ -35,6 +35,18 @@ module PairingShuffler
         end
         data.compact
       end
+    end
+
+    def access_token
+      params = {
+        :client_id => @config.fetch(:client_id),
+        :client_secret => @config.fetch(:client_secret),
+        :refresh_token => @config.fetch(:refresh_token),
+        :grant_type => "refresh_token"
+      }.map { |k, v| "-d '#{k}=#{v}'" }.join(" ")
+      response = `curl https://accounts.google.com/o/oauth2/token --silent -X POST #{params}`
+      raise "FAILED: #{response}" unless $?.success?
+      JSON.load(response).fetch("access_token")
     end
 
     def list
