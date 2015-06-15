@@ -99,3 +99,6 @@ DEPENDENCIES
   pairing_shuffler!
   rake
   rspec (~> 2)
+
+BUNDLED WITH
+   1.10.2
