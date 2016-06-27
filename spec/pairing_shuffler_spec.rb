@@ -11,9 +11,16 @@ describe PairingShuffler do
       PairingShuffler::VERSION.should =~ /^[\.\da-z]+$/
     end
 
+    # paste correct values into a test-sheet to have this work ...
     context "integration" do
       it "can read a spreadsheet" do
-        shuffler.send(:content).should == [["Test list for library"], ["Email", "Team"], ["a@b.com", "A"], ["b@b.com", "B"], ["c@b.com", "C"]]
+        shuffler.send(:content).should == [
+          ["Test list for library"],
+          ["Email", "Team", "Interested in", "Working on", "Away until"],
+          ["a@b.com", "Team-A", nil, nil, "2/5/2016"],
+          ["b@b.com", "Team-B"],
+          ["c@b.com", "Team-C", nil, "Nothing", "10/23/2015"]
+        ]
       end
 
       it "can return a shuffled list" do
@@ -48,12 +55,32 @@ describe PairingShuffler do
         shuffler.send(:list).size.should == 0
       end
 
+      it "include people that are back with weird content" do
+        shuffler.stub(:content).and_return [
+          ["Test list for library"],
+          ["Email", "Team", "Away until"],
+          ["a@b.com", "A"],
+          ["b@b.com", "B", "On PTO until #{(Time.now - day).strftime("%m/%d/%Y")}"],
+        ]
+        shuffler.send(:list).size.should == 1
+      end
+
       it "includes people that are back" do
         shuffler.stub(:content).and_return [
           ["Test list for library"],
           ["Email", "Team", "Away until"],
           ["a@b.com", "A"],
           ["b@b.com", "B", (Time.now - day).strftime("%m/%d/%Y")],
+        ]
+        shuffler.send(:list).size.should == 1
+      end
+
+      it "includes unreadable dates since otherwise nobody will ever fix them" do
+        shuffler.stub(:content).and_return [
+          ["Test list for library"],
+          ["Email", "Team", "Away until"],
+          ["a@b.com", "A"],
+          ["b@b.com", "B", "I'll be back!"],
         ]
         shuffler.send(:list).size.should == 1
       end

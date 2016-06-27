@@ -55,14 +55,14 @@ module PairingShuffler
     end
 
     def present?(row)
-      away_until = content.map { |row| row.index("Away until") }.compact.first
-      !away_until ||
-        row[away_until].to_s.strip.empty? ||
-        parse_time(row[away_until]) + DAY < Time.now
+      return true unless away_until = content.map { |row| row.index("Away until") }.compact.first
+      return true unless time = parse_time(row[away_until])
+      time + DAY < Time.now
     end
 
     def parse_time(time)
-      Time.strptime(time, "%m/%d/%Y")
+      return unless date = time.to_s[/\d+\/\d+\/\d+/]
+      Time.strptime(date, "%m/%d/%Y")
     end
   end
 
