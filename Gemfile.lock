@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pairing_shuffler (2.0.1)
+    pairing_shuffler (2.0.2)
       google_drive (>= 1.0.0)
 
 GEM
@@ -47,7 +47,7 @@ GEM
       multi_json (= 1.11)
       signet (~> 0.6)
     i18n (0.7.0)
-    json (1.8.2)
+    json (1.8.3)
     jwt (1.5.0)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -101,4 +101,4 @@ DEPENDENCIES
   rspec (~> 2)
 
 BUNDLED WITH
-   1.10.2
+   1.12.5
