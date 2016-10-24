@@ -45,8 +45,12 @@ module PairingShuffler
         :grant_type => "refresh_token"
       }.map { |k, v| "-d '#{k}=#{v}'" }.join(" ")
       response = `curl https://accounts.google.com/o/oauth2/token --silent -X POST #{params}`
-      raise "FAILED: #{response}" unless $?.success?
-      JSON.load(response).fetch("access_token")
+
+      # cannot use curls --fail since it would hide error details
+      $?.success? && response.start_with?("{") && token = JSON.load(response)["access_token"]
+      raise "FAILED: #{response}" unless token
+
+      token
     end
 
     def list
