@@ -30,8 +30,9 @@ module PairingShuffler
         cells = session.spreadsheet_by_key(@config[:doc]).worksheets[0].cells
         data = []
         cells.each do |(row, column), value|
-          data[row - 1] ||= []
-          data[row - 1][column - 1] = value
+          row -= 1 # change to 0-based index
+          column -= 1 # change to 0-based index
+          (data[row] ||= [])[column] = value
         end
         data.compact
       end
@@ -54,7 +55,7 @@ module PairingShuffler
     end
 
     def list
-      emails = content.compact.select { |row| row.first.include?("@") && present?(row) }.map(&:first)
+      emails = content.compact.select { |row| row.first.to_s.include?("@") && present?(row) }.map(&:first)
       emails.sort_by{ rand }.each_slice(2).to_a.reject { |group| group.size == 1 }
     end
 
