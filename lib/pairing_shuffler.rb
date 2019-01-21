@@ -99,9 +99,10 @@ module PairingShuffler
 
         What time would work for you ?
 
-        Ideas:
+        Tips:
          - Talk out loud & explain: what are you thinking / what are you going to do
          - Ping pong with tests: A writes tests, B writes implementation
+         - check out https://robots.thoughtbot.com/how-to-get-better-at-pair-programming
          - Invite others to sign up for pairing
 
         Greetings,
