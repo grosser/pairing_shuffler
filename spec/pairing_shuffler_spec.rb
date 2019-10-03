@@ -17,9 +17,9 @@ describe PairingShuffler do
         shuffler.send(:content).should == [
           ["Test list for library"],
           ["Email", "Team", "Interested in", "Working on", "Away until"],
-          ["a@b.com", "Team-A", nil, nil, "2/5/2016"],
+          ["a@b.com", "Team-A", "", "", "2/5/2016"],
           ["b@b.com", "Team-B"],
-          ["c@b.com", "Team-C", nil, "Nothing", "10/23/2015"]
+          ["c@b.com", "Team-C", "", "Nothing", "10/23/2015"]
         ]
       end
 
@@ -30,6 +30,7 @@ describe PairingShuffler do
       end
 
       it "can send emails" do
+        # TODO: use satisfy matcher here somehow to silence deprecation
         PairingShuffler::Mailer.any_instance.should_receive(:send_email).with{|emails| possible.should include(emails.sort); true }
         PairingShuffler.shuffle(config)
       end

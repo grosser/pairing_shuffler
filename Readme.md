@@ -15,7 +15,7 @@ Send out emails to random pairs from a google docs spreadsheet:
 ```Bash
 git clone git://github.com/grosser/pairing_shuffler.git && cd pairing_shuffler
 cp credentials.example.yml credentials.yml
-# fill it out by following instructions on https://github.com/gimite/google-drive-ruby with an oauth 'installed application' token
+# fill it out by following instructions on https://github.com/gimite/google-drive-ruby/blob/master/doc/authorization.md#on-behalf-of-you-command-line-authorization
 rake token
 # store token in credentials.yml
 rake assign_pairs
